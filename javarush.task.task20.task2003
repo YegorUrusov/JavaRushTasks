@@ -1,0 +1,36 @@
+public class Solution {
+    public static Map<String, String> properties = new HashMap<>();
+
+    public void fillInPropertiesMap() throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        FileInputStream fis = new FileInputStream(reader.readLine());
+        load(fis);
+    }
+
+    public void save(OutputStream outputStream) throws Exception {
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream));
+        Properties pr = new Properties();
+
+        if (!properties.isEmpty()) {
+            for (Map.Entry entry : properties.entrySet()) {
+                pr.setProperty(entry.getKey().toString(), entry.getValue().toString());
+            }
+        }
+        pr.store(writer, "");
+        writer.close();
+    }
+
+    public void load(InputStream inputStream) throws Exception {
+        Properties pr = new Properties();
+        pr.load(inputStream);
+
+        for (final String name: pr.stringPropertyNames())
+            properties.put(name, pr.getProperty(name));
+
+        inputStream.close();
+    }
+
+    public static void main(String[] args) {
+
+    }
+}
